@@ -10,15 +10,15 @@ using Verse.AI;
 using Verse;
 using Verse.Sound;
 
-namespace Lab
+namespace AdditionalVerb
 {
 
     [StaticConstructorOnStartup]
-    public static class LabPatch
+    public static class AdditionalVerbPatch
     {
-        static LabPatch()
+        static AdditionalVerbPatch()
         {
-            HarmonyInstance harmonyInstance = HarmonyInstance.Create("com.Lab.rimworld.mod");
+            HarmonyInstance harmonyInstance = HarmonyInstance.Create("com.AdditionalVerb.rimworld.mod");
             harmonyInstance.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), "GetGizmos", null, null), null, new HarmonyMethod(patchType, "GetGizmosPostfix", null));
 
             harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "BeginTargeting", new Type[] { typeof(Verb) }), new HarmonyMethod(patchType, "BeginTargetingPrefix", null));
@@ -50,7 +50,7 @@ namespace Lab
             Long
         }
 
-        private static readonly Type patchType = typeof(LabPatch);
+        private static readonly Type patchType = typeof(AdditionalVerbPatch);
         
         public static IEnumerable<Gizmo> GetGizmosPostfix(IEnumerable<Gizmo> __result, Pawn_EquipmentTracker __instance)
         {
@@ -330,6 +330,7 @@ namespace Lab
         public string desc;
         public string texPath;
         public Texture2D texture;
+        public int maxMagazine;
 
         public VerbProperties_Custom()
         {
@@ -343,11 +344,6 @@ namespace Lab
         }
         
             
-    }
-
-    public class VerbPorps_Consumeable : VerbProperties
-    {
-        public int maxMagazine;
     }
     public class Verb_ShootConsumeable : Verb_Shoot
     {

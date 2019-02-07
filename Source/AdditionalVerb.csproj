@@ -7,8 +7,8 @@
     <ProjectGuid>{518118FA-1727-4ABD-A421-1989E365076D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lab</RootNamespace>
-    <AssemblyName>Lab</AssemblyName>
+    <RootNamespace>AdditionalVerb</RootNamespace>
+    <AssemblyName>AdditionalVerb</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
