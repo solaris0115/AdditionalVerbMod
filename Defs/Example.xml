@@ -5,15 +5,11 @@
 		<label>assault rifle X</label>
 		<description>Can Switch firing mode</description>
 		<graphicData>
-			<texPath>Things/Item/Equipment/WeaponRanged/AssaultRifle</texPath>
+			<texPath>Things/Item/Equipment/WeaponRanged/ChargeLance</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<soundInteract>Interact_Rifle</soundInteract>
-		<recipeMaker>
-			<researchPrerequisite>PrecisionRifling</researchPrerequisite>
-			<skillRequirements>
-				<Crafting>6</Crafting>
-			</skillRequirements>
+		<recipeMaker Inherit = "false">
 		</recipeMaker>
 		<statBases>
 			<WorkToMake>40000</WorkToMake>
@@ -37,33 +33,33 @@
 			<li Class="AdditionalVerb.VerbProperties_Custom">
 				<verbClass>Verb_Shoot</verbClass>
 				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_AssaultRifleA</defaultProjectile>
+				<defaultProjectile>Bullet_ChargeBlasterHeavy</defaultProjectile>
 				<warmupTime>1.0</warmupTime>
 				<range>44.9</range>
-				<burstShotCount>5</burstShotCount>
-				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+				<burstShotCount>8</burstShotCount>
+				<ticksBetweenBurstShots>3</ticksBetweenBurstShots>
 				<soundCast>Shot_AssaultRifle</soundCast>
 				<soundCastTail>GunTail_Medium</soundCastTail>
 				<muzzleFlashScale>9</muzzleFlashScale>
 				<desc>Pew Pew Pew</desc>
 				<label>Rapid Fire</label>
 				<texPath>UI/Commands/Pew</texPath>
-				<accuracyTouch>0.30</accuracyTouch>
-				<accuracyShort>0.50</accuracyShort>
-				<accuracyMedium>0.20</accuracyMedium>
+				<accuracyTouch>0.10</accuracyTouch>
+				<accuracyShort>0.10</accuracyShort>
+				<accuracyMedium>0.10</accuracyMedium>
 				<accuracyLong>0</accuracyLong>
 			</li>
 			<li Class="AdditionalVerb.VerbProperties_Custom">
 				<verbClass>Verb_Shoot</verbClass>
 				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_AssaultRifleB</defaultProjectile>
+				<defaultProjectile>Bullet_InfernoCannon</defaultProjectile>				
+				<forcedMissRadius>1</forcedMissRadius>
 				<warmupTime>2.0</warmupTime>
 				<range>44.9</range>
 				<burstShotCount>1</burstShotCount>
-				<ticksBetweenBurstShots>1</ticksBetweenBurstShots>
 				<soundCast>Shot_AssaultRifle</soundCast>
 				<soundCastTail>GunTail_Medium</soundCastTail>
-				<muzzleFlashScale>15</muzzleFlashScale>
+				<muzzleFlashScale>10</muzzleFlashScale>
 				<desc>Precisely Pew</desc>
 				<label>Precisely Fire</label>
 				<texPath>UI/Commands/Snipe</texPath>
@@ -72,22 +68,7 @@
 				<accuracyMedium>0.20</accuracyMedium>
 				<accuracyLong>0.50</accuracyLong>
 			</li>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<hasStandardCommand>true</hasStandardCommand>
-				<defaultProjectile>Bullet_AssaultRifleB</defaultProjectile>
-				<warmupTime>1.0</warmupTime>
-				<range>31.9</range>
-				<burstShotCount>3</burstShotCount>
-				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
-				<soundCast>Shot_AssaultRifle</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<muzzleFlashScale>15</muzzleFlashScale>
-			</li>
 		</verbs>
-		<weaponTags>
-			<li>SniperRifle</li>
-		</weaponTags>
 		<tools>
 			<li>
 				<label>stock</label>
@@ -118,7 +99,7 @@
 		<projectile>
 			<damageDef>Bullet</damageDef>
 			<damageAmountBase>11</damageAmountBase>
-			<speed>70</speed>
+			<speed>50</speed>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
@@ -130,7 +111,7 @@
 		</graphicData>
 		<projectile>
 			<damageDef>Bullet</damageDef>
-			<damageAmountBase>11</damageAmountBase>
+			<damageAmountBase>15</damageAmountBase>
 			<speed>70</speed>
 		</projectile>
 	</ThingDef>

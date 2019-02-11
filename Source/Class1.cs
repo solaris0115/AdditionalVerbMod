@@ -99,23 +99,30 @@ namespace AdditionalVerb
         }
         public static void BeginTargetingPrefix(Verb verb)
         {
-            Comp_VerbSaveable comp = ((CompEquippable)verb.DirectOwner).parent.GetComp<Comp_VerbSaveable>();
-            if(comp!=null)
+            if (verb != null && verb.verbTracker != null && verb.verbTracker.directOwner != null && verb.DirectOwner is CompEquippable)
             {
-                comp.tempVerb = verb;
+                Comp_VerbSaveable comp = ((CompEquippable)verb.DirectOwner).parent.GetComp<Comp_VerbSaveable>();
+                if (comp != null)
+                {
+                    comp.tempVerb = verb;
+                }
             }
         }
         public static void OrderPawnForceTargetPostfix(Targeter __instance ,Verb verb)
         {
-            Comp_VerbSaveable comp = ((CompEquippable)verb.DirectOwner).parent.GetComp<Comp_VerbSaveable>();
-            if (comp != null)
+            if (verb != null && verb.verbTracker != null && verb.verbTracker.directOwner != null && verb.DirectOwner is CompEquippable)
             {
-                if (!(Traverse.Create(__instance).Method("CurrentTargetUnderMouse", true).GetValue<LocalTargetInfo>().IsValid))
+                Comp_VerbSaveable comp = ((CompEquippable)verb.DirectOwner).parent.GetComp<Comp_VerbSaveable>();
+                if (comp != null)
                 {
-                    return;
+                    if (!(Traverse.Create(__instance).Method("CurrentTargetUnderMouse", true).GetValue<LocalTargetInfo>().IsValid))
+                    {
+                        return;
+                    }
+                    comp.currentVerb = verb;
                 }
-                comp.currentVerb = verb;
             }
+                
         }
         public static bool GetTargetingVerbPostfix(ref Verb __result, Pawn pawn)
         {
@@ -129,12 +136,16 @@ namespace AdditionalVerb
         }
         public static void StopTargetingPrefix(Verb ___targetingVerb)
         {
-            if (___targetingVerb !=null)
+            if (___targetingVerb != null && ___targetingVerb.verbTracker != null && ___targetingVerb.verbTracker.directOwner != null )
             {
-                Comp_VerbSaveable comp = ((CompEquippable)___targetingVerb.DirectOwner).parent.GetComp<Comp_VerbSaveable>();
-                if (comp != null)
+                CompEquippable compEquip = ___targetingVerb.DirectOwner as CompEquippable;
+                if (compEquip != null)
                 {
-                    comp.tempVerb = null;
+                    Comp_VerbSaveable compVerbSave = compEquip.parent.GetComp<Comp_VerbSaveable>();
+                    if (compVerbSave != null)
+                    {
+                        compVerbSave.tempVerb = null;
+                    }
                 }
             }
         }
@@ -186,15 +197,18 @@ namespace AdditionalVerb
         }
         public static bool PrimaryVerbPrefix(VerbTracker __instance, ref Verb __result)
         {
-            Comp_VerbSaveable comp = ((CompEquippable)__instance.directOwner).parent.GetComp<Comp_VerbSaveable>();
-            if (comp != null)
+            if (__result != null && __result.verbTracker != null && __result.verbTracker.directOwner != null && __result.DirectOwner is CompEquippable)
             {
-                __result = comp.currentVerb;
-                if (__result != null)
+                Comp_VerbSaveable comp = ((CompEquippable)__instance.directOwner).parent.GetComp<Comp_VerbSaveable>();
+                if (comp != null)
                 {
-                    return false;
+                    __result = comp.currentVerb;
+                    if (__result != null)
+                    {
+                        return false;
+                    }
                 }
-            }
+            }                
             return true;
         }
 
