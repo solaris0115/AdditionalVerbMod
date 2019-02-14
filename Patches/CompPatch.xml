@@ -27,6 +27,30 @@
 						<!-- </comps> -->
 					<!-- </value> -->
 				<!-- </li> -->
+				<li Class="PatchOperationAdd">
+					<xpath>*/ThingDef[defName="Gun_AssaultRifleX"]/verbs</xpath>
+					<value>
+						<li Class="AdditionalVerb.VerbProperties_Custom">
+							<verbClass>Verb_Shoot</verbClass>
+							<hasStandardCommand>true</hasStandardCommand>
+							<defaultProjectile>Bullet_ChargeBlasterHeavy</defaultProjectile>
+							<warmupTime>1.0</warmupTime>
+							<range>31.9</range>
+							<burstShotCount>3</burstShotCount>
+							<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+							<soundCast>Shot_AssaultRifle</soundCast>
+							<soundCastTail>GunTail_Medium</soundCastTail>
+							<muzzleFlashScale>9</muzzleFlashScale>
+							<desc>Pew Pew</desc>
+							<label>Rapid</label>
+							<texPath>UI/Commands/Pew</texPath>
+							<accuracyTouch>0.45</accuracyTouch>
+							<accuracyShort>0.40</accuracyShort>
+							<accuracyMedium>0.25</accuracyMedium>
+							<accuracyLong>0</accuracyLong>
+						</li>					
+					</value>
+				</li>
 			</operations>
 		</match>
 	</Operation>
