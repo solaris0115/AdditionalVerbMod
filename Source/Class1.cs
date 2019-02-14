@@ -51,12 +51,12 @@ namespace AdditionalVerb
         }
 
         private static readonly Type patchType = typeof(AdditionalVerbPatch);
-        
+
         public static IEnumerable<Gizmo> GetGizmosPostfix(IEnumerable<Gizmo> __result, Pawn_EquipmentTracker __instance)
         {
             int count = 0;
             foreach (Gizmo g in __result)
-            {                
+            {
                 if (g is Command)
                 {
                     switch (count)
@@ -108,7 +108,7 @@ namespace AdditionalVerb
                 }
             }
         }
-        public static void OrderPawnForceTargetPostfix(Targeter __instance ,Verb verb)
+        public static void OrderPawnForceTargetPostfix(Targeter __instance, Verb verb)
         {
             if (verb != null && verb.verbTracker != null && verb.verbTracker.directOwner != null && verb.DirectOwner is CompEquippable)
             {
@@ -122,7 +122,7 @@ namespace AdditionalVerb
                     comp.currentVerb = verb;
                 }
             }
-                
+
         }
         public static bool GetTargetingVerbPostfix(ref Verb __result, Pawn pawn)
         {
@@ -136,7 +136,7 @@ namespace AdditionalVerb
         }
         public static void StopTargetingPrefix(Verb ___targetingVerb)
         {
-            if (___targetingVerb != null && ___targetingVerb.verbTracker != null && ___targetingVerb.verbTracker.directOwner != null )
+            if (___targetingVerb != null && ___targetingVerb.verbTracker != null && ___targetingVerb.verbTracker.directOwner != null)
             {
                 CompEquippable compEquip = ___targetingVerb.DirectOwner as CompEquippable;
                 if (compEquip != null)
@@ -154,12 +154,12 @@ namespace AdditionalVerb
         {
             Command_VerbTarget command_VerbTarget = new Command_VerbTarget();
             VerbProperties_Custom verbProps = verb.verbProps as VerbProperties_Custom;
-            if (verbProps!=null)
+            if (verbProps != null)
             {
                 command_VerbTarget.defaultDesc = verbProps.desc;
                 command_VerbTarget.defaultLabel = verbProps.label;
                 Comp_VerbSaveable comp_VerbSaveable = ownerThing.TryGetComp<Comp_VerbSaveable>();
-                if(comp_VerbSaveable!=null && comp_VerbSaveable.currentVerb == verb)
+                if (comp_VerbSaveable != null && comp_VerbSaveable.currentVerb == verb)
                 {
                     command_VerbTarget.icon = currentCommandTexture;
                 }
@@ -197,24 +197,21 @@ namespace AdditionalVerb
         }
         public static bool PrimaryVerbPrefix(VerbTracker __instance, ref Verb __result)
         {
-            if (__result != null && __result.verbTracker != null && __result.verbTracker.directOwner != null && __result.DirectOwner is CompEquippable)
+            Comp_VerbSaveable comp = ((CompEquippable)__instance.directOwner).parent.GetComp<Comp_VerbSaveable>();
+            if (comp != null)
             {
-                Comp_VerbSaveable comp = ((CompEquippable)__instance.directOwner).parent.GetComp<Comp_VerbSaveable>();
-                if (comp != null)
+                __result = comp.currentVerb;
+                if (__result != null)
                 {
-                    __result = comp.currentVerb;
-                    if (__result != null)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-            }                
+            }
             return true;
         }
 
         public static void AdjustedAccuracyPostfix(VerbProperties __instance, ref float __result, RangeCategory cat)
         {
-            if(__instance is VerbProperties_Custom)
+            if (__instance is VerbProperties_Custom)
             {
                 switch (cat)
                 {
@@ -236,7 +233,7 @@ namespace AdditionalVerb
             }
         }
 
-        public static bool ShotCalculationTipStringPrefix(ref string __result,Thing target)
+        public static bool ShotCalculationTipStringPrefix(ref string __result, Thing target)
         {
             StringBuilder stringBuilder = new StringBuilder();
             if (Find.Selector.SingleSelectedThing != null)
@@ -244,10 +241,10 @@ namespace AdditionalVerb
                 Thing singleSelectedThing = Find.Selector.SingleSelectedThing;
                 Verb verb = null;
                 Pawn pawn = singleSelectedThing as Pawn;
-                if (pawn != null && pawn != target && pawn.equipment != null && pawn.equipment.Primary !=null)
+                if (pawn != null && pawn != target && pawn.equipment != null && pawn.equipment.Primary != null)
                 {
                     Comp_VerbSaveable compsav = pawn.equipment.Primary.GetComp<Comp_VerbSaveable>();
-                    if (compsav != null && compsav.tempVerb !=null && compsav.tempVerb is Verb_LaunchProjectile)
+                    if (compsav != null && compsav.tempVerb != null && compsav.tempVerb is Verb_LaunchProjectile)
                     {
                         verb = compsav.tempVerb;
                     }

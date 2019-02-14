@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
-	<!-- <Operation Class="PatchOperationAdd"> -->
-		<!-- <xpath>*/ThingDef[@Name="BaseGun"]/comps</xpath> -->
-		<!-- <value> -->
-			<!-- <li> -->
-				<!-- <compClass>Lab.Comp_VerbSaveable</compClass> -->
-			<!-- </li> -->
-		<!-- </value> -->
-	<!-- </Operation> -->
+	<!-- Patch Sample -->
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Additional Verb Mod</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<success>Always</success>
+			<operations>
+				<!-- <li Class="PatchOperationAdd"> -->
+					<!-- <xpath>*/ThingDef[defName="Weapon's defName"]/comps</xpath> -->
+					<!-- <value> -->
+						<!-- <li> -->
+							<!-- <compClass>AdditionalVerb.Comp_VerbSaveable</compClass> -->
+						<!-- </li> -->
+					<!-- </value> -->
+				<!-- </li> -->
+				<!-- or if your weapon doesn't have comps use follow -->
+				<!-- <li Class="PatchOperationAdd"> -->
+					<!-- <xpath>*/ThingDef[defName="Weapon's defName"]</xpath> -->
+					<!-- <value> -->
+						<!-- <comps> -->
+							<!-- <li> -->
+								<!-- <compClass>AdditionalVerb.Comp_VerbSaveable</compClass> -->
+							<!-- </li> -->
+						<!-- </comps> -->
+					<!-- </value> -->
+				<!-- </li> -->
+			</operations>
+		</match>
+	</Operation>
 </Patch>
