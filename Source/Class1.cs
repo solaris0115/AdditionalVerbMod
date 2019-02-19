@@ -16,30 +16,34 @@ namespace AdditionalVerb
     [StaticConstructorOnStartup]
     public static class AdditionalVerbPatch
     {
+        private static readonly Type patchType = typeof(AdditionalVerbPatch);
         static AdditionalVerbPatch()
         {
             HarmonyInstance harmonyInstance = HarmonyInstance.Create("com.AdditionalVerb.rimworld.mod");
-            harmonyInstance.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), "GetGizmos", null, null), null, new HarmonyMethod(patchType, "GetGizmosPostfix", null));
+            if (!harmonyInstance.HasAnyPatches("com.AdditionalVerb.rimworld.mod"))
+            {
+                harmonyInstance.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), "GetGizmos", null, null), null, new HarmonyMethod(patchType, "GetGizmosPostfix", null));
 
-            harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "BeginTargeting", new Type[] { typeof(Verb) }), new HarmonyMethod(patchType, "BeginTargetingPrefix", null));
-            harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "OrderPawnForceTarget", null, null), null, new HarmonyMethod(patchType, "OrderPawnForceTargetPostfix", null));
-            harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "GetTargetingVerb", null, null), new HarmonyMethod(patchType, "GetTargetingVerbPostfix", null));
-            harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "StopTargeting", null, null), new HarmonyMethod(patchType, "StopTargetingPrefix", null));
+                harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "BeginTargeting", new Type[] { typeof(Verb) }), new HarmonyMethod(patchType, "BeginTargetingPrefix", null));
+                harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "OrderPawnForceTarget", null, null), null, new HarmonyMethod(patchType, "OrderPawnForceTargetPostfix", null));
+                //harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "GetTargetingVerb", null, null), new HarmonyMethod(patchType, "GetTargetingVerbPrefix", null));
+                harmonyInstance.Patch(AccessTools.Method(typeof(Targeter), "StopTargeting", null, null), new HarmonyMethod(patchType, "StopTargetingPrefix", null));
 
-            harmonyInstance.Patch(AccessTools.Method(typeof(VerbTracker), "CreateVerbTargetCommand", null, null), new HarmonyMethod(patchType, "CreateVerbTargetCommandPrefix", null));
-            harmonyInstance.Patch(AccessTools.Property(typeof(VerbTracker), "PrimaryVerb").GetGetMethod(), new HarmonyMethod(patchType, "PrimaryVerbPrefix", null));
+                harmonyInstance.Patch(AccessTools.Method(typeof(VerbTracker), "CreateVerbTargetCommand", null, null), new HarmonyMethod(patchType, "CreateVerbTargetCommandPrefix", null));
+                harmonyInstance.Patch(AccessTools.Property(typeof(VerbTracker), "PrimaryVerb").GetGetMethod(), new HarmonyMethod(patchType, "PrimaryVerbPrefix", null));
 
-            harmonyInstance.Patch(AccessTools.Method(typeof(VerbProperties), "AdjustedAccuracy", null, null), null, new HarmonyMethod(patchType, "AdjustedAccuracyPostfix", null));
+                harmonyInstance.Patch(AccessTools.Method(typeof(VerbProperties), "AdjustedAccuracy", null, null), null, new HarmonyMethod(patchType, "AdjustedAccuracyPostfix", null));
 
-            harmonyInstance.Patch(AccessTools.Method(typeof(TooltipUtility), "ShotCalculationTipString", null, null), new HarmonyMethod(patchType, "ShotCalculationTipStringPrefix", null));
+                harmonyInstance.Patch(AccessTools.Method(typeof(TooltipUtility), "ShotCalculationTipString", null, null), new HarmonyMethod(patchType, "ShotCalculationTipStringPrefix", null));
 
-            LongEventHandler.ExecuteWhenFinished
-            (
-                delegate
-                {
-                    currentCommandTexture = ContentFinder<Texture2D>.Get("UI/Commands/Select");
-                }
-            );
+                LongEventHandler.ExecuteWhenFinished
+                (
+                    delegate
+                    {
+                        currentCommandTexture = ContentFinder<Texture2D>.Get("UI/Commands/Select");
+                    }
+                );
+            }
         }
         public static Texture2D currentCommandTexture;
         public enum RangeCategory
@@ -49,9 +53,6 @@ namespace AdditionalVerb
             Medium,
             Long
         }
-
-        private static readonly Type patchType = typeof(AdditionalVerbPatch);
-
         public static IEnumerable<Gizmo> GetGizmosPostfix(IEnumerable<Gizmo> __result, Pawn_EquipmentTracker __instance)
         {
             int count = 0;
@@ -115,23 +116,27 @@ namespace AdditionalVerb
                 Comp_VerbSaveable comp = ((CompEquippable)verb.DirectOwner).parent.GetComp<Comp_VerbSaveable>();
                 if (comp != null)
                 {
+                    Log.Message(((CompEquippable)verb.DirectOwner).parent.ThingID);
                     if (!(Traverse.Create(__instance).Method("CurrentTargetUnderMouse", true).GetValue<LocalTargetInfo>().IsValid))
                     {
                         return;
                     }
                     comp.currentVerb = verb;
+                    Log.Message(verb.loadID);
                 }
             }
 
         }
-        public static bool GetTargetingVerbPostfix(ref Verb __result, Pawn pawn)
+        public static bool GetTargetingVerbPrefix(ref Verb __result, Pawn pawn,Verb ___targetingVerb)
         {
+            //Log.Message("pawn: " + "___targetingVerb")
+            /*__result = pawn.equipment.AllEquipmentVerbs.FirstOrDefault((Verb x) => x.verbProps == ___targetingVerb.verbProps);
             Comp_VerbSaveable comp = pawn.equipment.Primary.GetComp<Comp_VerbSaveable>();
             if (comp != null)
             {
                 __result = comp.currentVerb;
                 return false;
-            }
+            }*/
             return true;
         }
         public static void StopTargetingPrefix(Verb ___targetingVerb)

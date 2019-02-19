@@ -36,7 +36,7 @@
 				<defaultProjectile>Bullet_ChargeBlasterHeavy</defaultProjectile>
 				<warmupTime>1.0</warmupTime>
 				<range>31.9</range>
-				<burstShotCount>4</burstShotCount>
+				<burstShotCount>3</burstShotCount>
 				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
 				<soundCast>Shot_AssaultRifle</soundCast>
 				<soundCastTail>GunTail_Medium</soundCastTail>
