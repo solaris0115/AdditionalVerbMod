@@ -116,13 +116,11 @@ namespace AdditionalVerb
                 Comp_VerbSaveable comp = ((CompEquippable)verb.DirectOwner).parent.GetComp<Comp_VerbSaveable>();
                 if (comp != null)
                 {
-                    Log.Message(((CompEquippable)verb.DirectOwner).parent.ThingID);
                     if (!(Traverse.Create(__instance).Method("CurrentTargetUnderMouse", true).GetValue<LocalTargetInfo>().IsValid))
                     {
                         return;
                     }
                     comp.currentVerb = verb;
-                    Log.Message(verb.loadID);
                 }
             }
 
