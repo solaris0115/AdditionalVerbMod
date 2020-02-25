@@ -203,13 +203,17 @@ namespace AdditionalVerb
         }
         public static bool PrimaryVerbPrefix(VerbTracker __instance, ref Verb __result)
         {
-            Comp_VerbSaveable comp = ((CompEquippable)__instance.directOwner).parent.GetComp<Comp_VerbSaveable>();
-            if (comp != null)
+            CompEquippable compEquippable = __instance.directOwner as CompEquippable;
+            if(compEquippable !=null)
             {
-                __result = comp.currentVerb;
-                if (__result != null)
+                Comp_VerbSaveable compVerbSaveable = compEquippable.parent.GetComp<Comp_VerbSaveable>();
+                if (compVerbSaveable != null)
                 {
-                    return false;
+                    __result = compVerbSaveable.currentVerb;
+                    if (__result != null)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
