@@ -33,9 +33,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\NewRatkin\1.1\Assemblies\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2009463077\v1.1\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
@@ -59,6 +59,9 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\..\..\..\..\workshop\content\294100\2009463077\v1.1\Assemblies\0Harmony.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

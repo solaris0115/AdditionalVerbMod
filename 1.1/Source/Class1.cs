@@ -32,14 +32,7 @@ namespace AdditionalVerb
             harmonyInstance.Patch(AccessTools.Method(typeof(VerbProperties), "AdjustedAccuracy", null, null), null, new HarmonyMethod(patchType, "AdjustedAccuracyPostfix", null));
 
             harmonyInstance.Patch(AccessTools.Method(typeof(TooltipUtility), "ShotCalculationTipString", null, null), new HarmonyMethod(patchType, "ShotCalculationTipStringPrefix", null));
-            /*
-            LongEventHandler.ExecuteWhenFinished
-            (
-                delegate
-                {
-                    currentCommandTexture = 
-                }
-            );*/
+
         }
         public static Texture2D currentCommandTexture= ContentFinder<Texture2D>.Get("UI/Commands/Select");
         public enum RangeCategory
@@ -49,8 +42,31 @@ namespace AdditionalVerb
             Medium,
             Long
         }
+        public static void GetGizmosPrefix(ref Pawn_EquipmentTracker __instance ,ref IEnumerable<Gizmo> __result)
+        {
+            if (__instance.Primary!=null)
+            {
+                foreach(ThingComp tc in __instance.Primary.AllComps)
+                {
+                    foreach(Gizmo g in tc.CompGetGizmosExtra())
+                    {
+                        __result.AddItem(g);
+                    }
+                }
+            }
+        }
         public static IEnumerable<Gizmo> GetGizmosPostfix(IEnumerable<Gizmo> __result, Pawn_EquipmentTracker __instance)
         {
+            if (__instance.Primary != null)
+            {
+                foreach (ThingComp tc in __instance.Primary.AllComps)
+                {
+                    foreach (Gizmo g in tc.CompGetGizmosExtra())
+                    {
+                        yield return g;
+                    }
+                }
+            }
             int count = 0;
             foreach (Gizmo g in __result)
             {
@@ -159,6 +175,10 @@ namespace AdditionalVerb
         public static bool CreateVerbTargetCommandPrefix(ref Command_VerbTarget __result, Thing ownerThing, Verb verb)
         {
             Command_VerbTarget command_VerbTarget = new Command_VerbTarget();
+            if(verb==null || verb.verbProps == null)
+            {
+                return false;
+            }
             VerbProperties_Custom verbProps = verb.verbProps as VerbProperties_Custom;
             if (verbProps != null)
             {
@@ -344,7 +364,6 @@ namespace AdditionalVerb
         }
     }
 
-
     [StaticConstructorOnStartup]
     public class VerbProperties_Custom : VerbProperties
     {
@@ -362,9 +381,7 @@ namespace AdditionalVerb
                     texture = ContentFinder<Texture2D>.Get(texPath);
                 }
             });            
-        }
-        
-            
+        }            
     }
     public class Verb_ShootConsumeable : Verb_Shoot
     {
