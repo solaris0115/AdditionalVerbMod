@@ -57,13 +57,16 @@ namespace AdditionalVerb
         }
         public static IEnumerable<Gizmo> GetGizmosPostfix(IEnumerable<Gizmo> __result, Pawn_EquipmentTracker __instance)
         {
-            if (__instance.Primary != null)
+            if (__instance.Primary != null && __instance.Primary.def.weaponTags!=null && __instance.Primary.def.weaponTags.Contains("AV"))
             {
                 foreach (ThingComp tc in __instance.Primary.AllComps)
                 {
-                    foreach (Gizmo g in tc.CompGetGizmosExtra())
+                    if(!(tc is CompForbiddable))
                     {
-                        yield return g;
+                        foreach (Gizmo g in tc.CompGetGizmosExtra())
+                        {
+                            yield return g;
+                        }
                     }
                 }
             }
