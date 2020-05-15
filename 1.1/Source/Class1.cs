@@ -164,7 +164,7 @@ namespace AdditionalVerb
             if (verb.verbTracker != null && verb.verbTracker.directOwner != null)
             {
                 CompEquippable compEquip = verb.DirectOwner as CompEquippable;
-                if (compEquip != null)
+                if (compEquip != null && compEquip.parent!=null)
                 {
                     Comp_VerbSaveable compVerbSave = compEquip.parent.GetComp<Comp_VerbSaveable>();
                     if (compVerbSave != null)
