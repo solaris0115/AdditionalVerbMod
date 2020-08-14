@@ -5,9 +5,10 @@
 	<supportedVersions>
 		<li>1.0</li>
 		<li>1.1</li>
+		<li>1.2</li>
 	</supportedVersions>
 	<packageId>Solaris.AdditionalVerbMod</packageId>
-	<url>https://github.com/jhjjgu0115/AdditionalVerbMod/</url>
+	<url>https://github.com/solaris0115/AdditionalVerbMod/</url>
 	<description>
 This mod enables additional verbs.
 Check Gun_AssaultRifleX
